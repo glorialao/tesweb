@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard EJS</title>
+</head>
+<body>
+    <%- include('../layouts/main-layouts.ejs'); %>
+    <h1>Halaman Dashboard</h1>
+<a
+  href="/dashboard/add"
+  class="btn btn-primary btn-lg active mb-2"
+  role="button"
+  aria-pressed="true"
+  >Tambah Produk</a
+>
+
+<% if (msg.length !== 0) { %>
+  <div class="alert alert-primary alert-dismissible fade show" role="alert">
+   
+    <strong><%= msg %> </strong>
+    
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+<% } %>
+
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Image</th>
+      <th scope="col">Link</th>
+      <th scope="col">Name</th>
+      <th scope="col">Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% dashboard.forEach(dash => { %>
+    <tr>
+      <td><%= dash.imagePath %></td>
+      <td><%= dash.link %></td>
+      <td><%= dash.name %></td>
+      <td><%= dash.price %></td>
+      <td>
+        <a href="/dashboard/edit/<%= dash._id %>" class="btn btn-success badge"
+          >Edit</a
+        >
+        <form action="/dashboard?_method=DELETE" method="post" class="d-inline">
+        <input type="hidden" name="id" value="<%= dash._id %>">
+        <button type="submit" class="btn btn-danger badge" onclick="return confirm('Yakin Akan Dihapus ?')">delete</button>
+        </form>
+
+      </td>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>
+
+</body>
+</html>
